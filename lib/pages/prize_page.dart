@@ -6,7 +6,12 @@ class PrizePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Text("Prize"),
+      body: Center(
+        child: Text(
+          'Prize',
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
     );
   }
 }

@@ -1,6 +1,8 @@
+import 'package:experiment/pages/files_page.dart';
+import 'package:experiment/pages/prize_page.dart';
+import 'package:experiment/pages/profile_page.dart';
+import 'package:experiment/pages/reports_page.dart';
 import 'package:flutter/material.dart';
-import 'pages/login_page.dart';
-import 'pages/files_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,9 +13,37 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: MainPage(),
+    );
+  }
+}
+
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  int currentIndex = 0;
+  final screens = [
+    const FilesPage(),
+    const PrizePage(),
+    const ReportsPage(),
+    const ProfilePage()
+  ];
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
+      body: IndexedStack(
+        index: currentIndex,
+        children: screens,
+      ),
       bottomNavigationBar: Container(
-        height: 70,
+        height: 65,
+        width: MediaQuery.of(context).size.width,
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.only(
               topRight: Radius.circular(30), topLeft: Radius.circular(30)),
@@ -27,6 +57,10 @@ class MyApp extends StatelessWidget {
             topRight: Radius.circular(30.0),
           ),
           child: BottomNavigationBar(
+            currentIndex: currentIndex,
+            onTap: (index) => setState(() => currentIndex = index),
+            selectedItemColor: Colors.black87,
+            unselectedItemColor: Colors.grey,
             type: BottomNavigationBarType.fixed,
             items: const [
               BottomNavigationBarItem(
@@ -38,19 +72,22 @@ class MyApp extends StatelessWidget {
               BottomNavigationBarItem(
                   icon: Icon(Icons.perm_identity_rounded), label: 'Profile'),
             ],
-            backgroundColor: Colors.cyanAccent,
+            backgroundColor: Colors.white,
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: const Icon(
-          Icons.add,
-        ),
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(16.0))),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {
+      //     Navigator.push(context,
+      //         MaterialPageRoute(builder: (context) => const PMKSYPage()));
+      //   },
+      //   child: const Icon(
+      //     Icons.add,
+      //   ),
+      //   shape: const RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.all(Radius.circular(16.0))),
+      // ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 }
